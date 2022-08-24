@@ -5,9 +5,10 @@ import pygame.draw
 
 
 class Ball:
-    def __init__(self, r, color, screen_size):
+    def __init__(self, r, color, game):
         self.r = r
-        self.screen_size = screen_size
+        self.game = game
+        self.screen_size = game.screen_size
         self.x = self.screen_size[0] // 2 - self.r
         self.y = self.screen_size[1] // 2 - self.r
         self.color = color
@@ -18,10 +19,10 @@ class Ball:
         self.x = self.x + cos(radians(self.angle)) * v
         self.y = self.y - sin(radians(self.angle)) * v
         self.collision_with_wall()
+        self.collision_with_boards()
 
         res = self.check_loss()
         if res:
-            print(res)
             self.start()
         return res
 
@@ -40,6 +41,11 @@ class Ball:
             self.angle = 360 - self.angle
         if self.y >= self.screen_size[1] - 2 * self.r and 180 <= self.angle < 270:
             self.angle = self.angle - 2 * (self.angle - 180)
+
+    def collision_with_boards(self):
+        left_board = self.game.left_player
+        right_board = self.game.right_player
+        print(left_board)
 
     def start(self):
         self.x = self.screen_size[0] // 2 - self.r
