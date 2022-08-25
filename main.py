@@ -15,7 +15,7 @@ class Game:
         self.left_player = Board(0, pygame.Color('red'), (self.W, self.H))
         self.right_player = Board(1, pygame.Color('blue'), (self.W, self.H))
 
-        self.ball_r = self.H * 0.05
+        self.ball_r = self.H * 0.04
         self.ball = Ball(self.ball_r, pygame.Color('yellow'), self)
 
         self.score_board = ScoreBoard(pygame.Color('white'), (self.W, self.H))
@@ -24,13 +24,13 @@ class Game:
         self.clock = pygame.time.Clock()
         self.running = True
         self.started = False
-        self.board_v = 3
-        self.ball_v = 5
+        self.board_v = 5
+        self.ball_v = 7
         self.left_boost = 1
         self.right_boost = 1
 
         while self.running:
-            self.screen.fill(pygame.Color('dark green'))
+            self.screen.fill(pygame.Color('#70C919'))
             pygame.draw.line(self.screen, pygame.Color('white'), (self.W // 2, 0), (self.W // 2, self.H))
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -38,21 +38,21 @@ class Game:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
                         if not self.started and pygame.key.get_mods() & pygame.KMOD_SHIFT:
-                            self.ball.start()
                             self.started = True
                         elif not self.started:
+                            self.ball.start()
                             self.started = True
-                        else:
-                            self.started = False
-                if pygame.key.get_mods() & pygame.KMOD_LSHIFT:
-                    self.left_boost = 2
-                else:
-                    self.left_boost = 1
-
-                if pygame.key.get_mods() & pygame.KMOD_RSHIFT:
-                    self.right_boost = 2
-                else:
-                    self.right_boost = 1
+                        # else:
+                        #     self.started = False
+                # if pygame.key.get_mods() & pygame.KMOD_LSHIFT:
+                #     self.left_boost = 2
+                # else:
+                #     self.left_boost = 1
+                #
+                # if pygame.key.get_mods() & pygame.KMOD_RSHIFT:
+                #     self.right_boost = 2
+                # else:
+                #     self.right_boost = 1
 
             self.move_boards()
             self.move_ball()
